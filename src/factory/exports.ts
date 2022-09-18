@@ -10,15 +10,35 @@ export class MarkedExportsMixinFactory {
 
     public static fromExports(exports: Record<string, any>): MarkedExportsMixinFactory {
 
-        return new MarkedExportsMixinFactory(
-            new Map<string, any>(Object.entries(exports)),
-        );
+        return new MarkedExportsMixinFactory(exports);
     }
 
-    private readonly _exports: Map<string, any>;
+    private readonly _exports: Record<string, any>;
 
-    private constructor(exports: Map<string, any>) {
+    private constructor(exports: Record<string, any>) {
 
         this._exports = exports;
+    }
+
+    public createInjectMixin(variableName: string): MarkedMixin {
+
+        return (sandbox: ISandbox) => {
+
+            sandbox.inject(variableName, {
+                ...this._exports,
+            });
+            return;
+        };
+    }
+
+    public createProvideMixin(moduleName: string): MarkedMixin {
+
+        return (sandbox: ISandbox) => {
+
+            sandbox.provide(moduleName, {
+                ...this._exports,
+            });
+            return;
+        };
     }
 }
