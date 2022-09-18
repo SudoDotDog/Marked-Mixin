@@ -4,6 +4,8 @@
  * @description Mixin Creator
  */
 
+import { ISandbox, MarkedMixin } from "@sudoo/marked";
+
 export type CreateSingleModuleMarkedMixinOption = {
 
     readonly provideModuleName: string;
@@ -13,6 +15,13 @@ export type CreateSingleModuleMarkedMixinOption = {
 export const createSingleModuleMarkedMixin = (
     option: CreateSingleModuleMarkedMixinOption,
 ) => {
+
+    const mixin: MarkedMixin = (sandbox: ISandbox) => {
+
+        if (sandbox.usingAdditionalArgument) {
+
+        }
+    };
 
     return;
 };
