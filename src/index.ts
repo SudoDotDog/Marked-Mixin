@@ -4,4 +4,4 @@
  * @description Index
  */
 
-export * from "./mixin-creator";
+export * from "./factory/exports";
