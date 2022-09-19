@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace MarkedMixin_Factory
+ * @namespace Factory
  * @description Exports
  */
 
