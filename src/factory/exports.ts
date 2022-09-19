@@ -8,7 +8,9 @@ import { ISandbox, MarkedMixin } from "@sudoo/marked";
 
 export class MarkedExportsMixinFactory {
 
-    public static fromExports(exports: Record<string, any>): MarkedExportsMixinFactory {
+    public static fromExports(
+        exports: Record<string, any>,
+    ): MarkedExportsMixinFactory {
 
         return new MarkedExportsMixinFactory(exports);
     }
