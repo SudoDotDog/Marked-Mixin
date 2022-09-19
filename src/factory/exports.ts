@@ -24,9 +24,10 @@ export class MarkedExportsMixinFactory {
 
         return (sandbox: ISandbox) => {
 
-            sandbox.inject(variableName, {
-                ...this._exports,
-            });
+            sandbox.inject(
+                variableName,
+                this._polyfillExports(sandbox.usingAdditionalArgument),
+            );
             return;
         };
     }
@@ -35,10 +36,36 @@ export class MarkedExportsMixinFactory {
 
         return (sandbox: ISandbox) => {
 
-            sandbox.provide(moduleName, {
-                ...this._exports,
-            });
+            sandbox.provide(
+                moduleName,
+                this._polyfillExports(sandbox.usingAdditionalArgument),
+            );
             return;
         };
+    }
+
+    private _polyfillExports(additionalArgument: boolean): Record<string, any> {
+
+        const keys: string[] = Object.keys(this._exports);
+
+        const polyfill: Record<string, any> = {};
+
+        for (const key of keys) {
+
+            const value: any = this._exports[key];
+
+            if (typeof value === 'function') {
+
+                if (additionalArgument) {
+                    polyfill[key] = (_additionalArgument: any, ...args: any[]) => {
+                        return value(...args);
+                    };
+                }
+            } else {
+
+                polyfill[key] = value;
+            }
+        }
+        return polyfill;
     }
 }
