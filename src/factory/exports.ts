@@ -28,7 +28,7 @@ export class MarkedExportsMixinFactory {
 
             sandbox.inject(
                 variableName,
-                this._polyfillExports(sandbox.usingAdditionalArgument),
+                this._polyfillExports(sandbox),
             );
             return;
         };
@@ -40,33 +40,34 @@ export class MarkedExportsMixinFactory {
 
             sandbox.provide(
                 moduleName,
-                this._polyfillExports(sandbox.usingAdditionalArgument),
+                this._polyfillExports(sandbox),
             );
             return;
         };
     }
 
-    private _polyfillExports(additionalArgument: boolean): Record<string, any> {
+    private _polyfillExports(sandbox: ISandbox): Record<string, any> {
 
         const keys: string[] = Object.keys(this._exports);
 
         const polyfill: Record<string, any> = {};
 
-        for (const key of keys) {
+        keys: for (const key of keys) {
 
             const value: any = this._exports[key];
 
             if (typeof value === 'function') {
 
-                if (additionalArgument) {
-                    polyfill[key] = (_additionalArgument: any, ...args: any[]) => {
-                        return value(...args);
-                    };
-                }
-            } else {
-
-                polyfill[key] = value;
+                polyfill[key] = (...args: any[]) => {
+                    if (sandbox.usingAdditionalArgument) {
+                        return value(...args.slice(1));
+                    }
+                    return value(...args);
+                };
+                continue keys;
             }
+
+            polyfill[key] = value;
         }
         return polyfill;
     }
