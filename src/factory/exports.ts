@@ -5,8 +5,9 @@
  */
 
 import { ISandbox, MarkedMixin } from "@sudoo/marked";
+import { IMarkedMixinFactory } from "./declare";
 
-export class MarkedExportsMixinFactory {
+export class MarkedExportsMixinFactory implements IMarkedMixinFactory {
 
     public static fromExports(
         exports: Record<string, any>,
