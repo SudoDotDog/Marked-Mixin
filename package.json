@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/marked-mixin",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Mixin Helpers for Marked",
   "repository": {
     "type": "git",
