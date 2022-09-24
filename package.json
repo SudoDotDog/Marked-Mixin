@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/marked-mixin",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Mixin Helpers for Marked",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "@sudoo/marked": "*"
   },
   "devDependencies": {
-    "@sudoo/marked": "^3.12.0",
+    "@sudoo/marked": "^3.14.0",
     "@sudoo/triforce": "^3.8.0"
   },
   "nyc": {

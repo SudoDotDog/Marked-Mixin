@@ -5,6 +5,7 @@
  */
 
 import { ISandbox, MarkedMixin } from "@sudoo/marked";
+import { wrapMarkedMixinFunction } from "../wrap";
 import { IMarkedMixinFactory } from "./declare";
 
 export class MarkedExportsMixinFactory implements IMarkedMixinFactory {
@@ -59,12 +60,7 @@ export class MarkedExportsMixinFactory implements IMarkedMixinFactory {
 
             if (typeof value === 'function') {
 
-                polyfill[key] = (...args: any[]) => {
-                    if (sandbox.usingAdditionalArgument) {
-                        return value(...args.slice(1));
-                    }
-                    return value(...args);
-                };
+                polyfill[key] = wrapMarkedMixinFunction(sandbox, value);
                 continue keys;
             }
 
